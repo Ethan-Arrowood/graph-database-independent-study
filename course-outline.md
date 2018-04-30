@@ -16,6 +16,7 @@ Readings:
 - [Graph Databases](http://graphdatabases.com/) (O'Reilly) *Ian Robinson, Jim Webber, & Emil Eifrem*
 - [Learning Neo4j](https://neo4j.com/book-learning-neo4j/) *Rik Van Bruggen*
 - [Neo4j Developer Manual](https://neo4j.com/docs/developer-manual/current/)
+- [Neo4j Operations Manual](https://neo4j.com/docs/operations-manual/current/)
 
 ## Week 1 (07/05 - 11/05)
 **Goal:** Research fundamentals of Graph-structured databases
@@ -52,8 +53,11 @@ Readings:
 ## Week 6 (11/06 - 15/06)
 **Goal:** Study for Neo4j Certification exam
 
+Neo4j Certification Blog [Post](https://medium.com/neo4j/neo4j-certification-how-to-pass-like-a-pro-eed6daa7c6f7)
+
 ## Week 7 (18/06 - 22/06)
 **Goal:** Take and pass Neo4j Certification Exam
+
 Link to exam can be found [here](https://neo4j.com/graphacademy/neo4j-certification/)
 
 ## Week 8 (25/06 - 29/06)
