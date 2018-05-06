@@ -2,7 +2,7 @@
 
 Student: Ethan Arrowood
 
-Advisor: \<Professor\>
+Advisor: Professor Kreimendahl
 
 Number of weeks: 14
 
@@ -11,6 +11,8 @@ Start: May 7th (Monday)
 End: August 7th (Tuesday)
 
 **Goal:** Study Graph structured database fundamentals and become a Neo4j certified professional. Demonstrate understanding of Neo4j by developing a web application leverging Neo4j. Present web app at the end of the semester along with an explanation on certain key developer decisions. 
+
+**Weekly Post:** Each week I will commit a blog-post-like file to this repository covering whatever that week's topic was. I'll include code snippets and self-drawn graphics. 
 
 Readings:
 - [Graph Databases](http://graphdatabases.com/) (O'Reilly) *Ian Robinson, Jim Webber, & Emil Eifrem*
@@ -51,7 +53,10 @@ Readings:
 - *Learning Neo4j* Chapter 5 & 8
 
 ## Week 6 (11/06 - 15/06)
-**Goal:** Study for Neo4j Certification exam
+**Goal:** Learn about Graph Database Internals and begin preparing for Certification Exam
+
+Readings:
+- *Graph Databases* Chapter 6
 
 Neo4j Certification Blog [Post](https://medium.com/neo4j/neo4j-certification-how-to-pass-like-a-pro-eed6daa7c6f7)
 
