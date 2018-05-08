@@ -19,6 +19,6 @@ about: Provides an easy to follow task list for each weeks set of tasks.
 - [ ] Complete all readings 📚
 - [ ] Complete all development work 🤓
 - [ ] Complete write up 📝
-- [ ] Push edits to a new branch: `week-#` :github:
+- [ ] Push edits to a new branch: `week-#` 😸
 - [ ] Review content and open a pull request 😎
 - [ ] Create issue template for following week based off of `course-outline.md` 🔥
