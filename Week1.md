@@ -1,43 +1,78 @@
 # Week 1 Notes
 
-Graph Databases Ch. 1 & 2
+## Graph Databases Chapter 1 Introduction
 
-**Graph** - a collection of _vertices_ and _edges_, or a set of _nodes_ and _relationships_. 
+**Graph** - a collection of _vertices_ and _edges_, or a set of _nodes_ and _relationships_.
 
-Entities are stored as _nodes_ and the relations between nodes, including additional metadata is stored within the _relationships_. 
+Entities are stored as _nodes_ and the relations between nodes, including additional metadata is stored within the _relationships_.
 
-Social networks, road planning, supply chain, medical history can all be represented using graphs. 
+Social networks, road planning, supply chain, medical history can all be represented using graphs.
 
-## Labeled Property Graph
+### Labeled Property Graph
+
 one of the most common graph model forms.
+
 - contains nodes and relationships
 - nodes contain properties (key-value pairs)
 - nodes can be labeled with one or more labels
 - relationships are named and directed. Always have a start and end node.
 - relationships can also contain properties in the form of key-value pairs.
 
-## Graph Space
-Two parts: 
-1. Tech used primarily for transactional online graph persistence, typically accessed directly in real time from an application.
-  This is in simple terms a `Graph Database`. Equivalent of the normal online transactional processing databased (OLTP) in the relational world (such as MySQL).
-2. Tech used primarily for offline graph analytics, typically performed as a series of batch steps. 
-  AKA `Graph Comput Engines`. Exist in the same space as other bulk data analysis technologies. For example: data mining and online analytical processing (OLAP).
+### Graph Space
 
-## Graph Databases
+Two parts:
+
+1. Tech used primarily for transactional online graph persistence, typically accessed directly in real time from an application.
+  This is in simple terms a `Graph Database`. Equivalent of the normal online transactional processing databases (OLTP) in the relational world (such as MySQL).
+2. Tech used primarily for offline graph analytics, typically performed as a series of batch steps.
+  AKA `Graph Compute Engines`. Exist in the same space as other bulk data analysis technologies. For example: data mining and online analytical processing (OLAP).
+
+### Graph Databases
+
 > A graph database management system (henceforth, a graph database) is an online database management system with Create, Read, Update, and Delete (CRUD) meth‐ ods that expose a graph data model.
 > ~ Page 5
 
 Two main properties of graph databases:
-1. Underlying Storage 
+
+1. Underlying Storage
   Most use a native graph storage optimized and designed for storing and managing graphs. Other GDB tech serialize graph data into a relational database, object-oriented database, or some other gen-purpose data store.
-  
+
   The data store directly affects how fast data can be created, read, updated, and deleted in a GDB.
 2. Processing Engine
-  Some definitions require gdb to utilize _index-free adjacency_ meaning that the _nodes_ physically point to each other in the db. But this book uses a broader view where as long as the db acts like a gdb it qualifies as one. 
+  Some definitions require gdb to utilize _index-free adjacency_ meaning that the _nodes_ physically point to each other in the db. But this book uses a broader view where as long as the db acts like a gdb it qualifies as one.
 
-  There is serious performance advantages to using index-free adjacency and this book uses the term **native graph processing** to describe gdbs that leverage it. 
+  There is serious performance advantages to using index-free adjacency and this book uses the term **native graph processing** to describe graph databases that leverage it.
 
-> Relationships are first-class citizens of the graph data model.
+> Relationships are first-class citizens of the graph data model. ~ Page 6
 
 Graph databases are best used when you are trying to represent multiple or complex relationships in your data. Other more traditional options focus on the entities themselves and less so on the relationships which are usually inferred via foreign keys or map-reduce processing (out-of-band)
 
+### Graph Compute Engines
+
+> enables global graph computational algorithms to be run against large datasets. ~ Page 7
+
+Useful when trying to analyze an entire set of data or very large chunks of it. One example given in the text is: "how many relationships, on average, does everyone in a social network have?"
+
+Operate in a 'batch process' manner similar to that of other OLAP and Data Mining services. Some example GCE include `Cassovary, Pegasus, and Giraph`. Most are based on the _Pregel white paper_ by Google (it describes the graph compute engineer they use to rank pages).
+
+### Power of Graph Databases
+
+Why use a graph database? The most straight forward answer is this: use a graph database when a data pattern performance improves by one or more orders of magnitude when implemented in a graph. One could argue that all scenarios can be represented by traditional relational databases, but Graph databases offer a flexible data model that is unmatched in performance in certain key scenarios. It is also very aligned with today's 'agile' software delivery practices.
+
+#### Performance
+
+In relational databases (MySQL), join-intensive query performance is extremely poor with large datasets. In a graph database the performance tends to remain constant even as the dataset grows.
+
+#### Flexibility
+
+Graph databases are organized in a very intuitive manner. The book states that it "accommodates business needs in a way that enables IT to move at the speed of business." I find this to be a very valuable aspect because as a piece of software expands and new features are added, a graph database allows for theoretical infinite expansion with very little historical inconsistencies.
+
+> we don’t have to model our domain in exhaustive detail ahead of time ~ page 9
+
+I've struggled with this exact issue when thinking about projects. Without a graph database businesses have to perform complete data migrations after they redesign their database. This can add multiple levels of complexity to a project and development timeline when trying to add a new feature.
+
+#### Agility
+
+Schema free graph databases allow for "frictionless development and graceful systems maintenance". Due to the schema free nature, some may argue this can be risky but the book states that it simply calls forth a "far more visible and actionable kind of governance." Test driven development, well articulated data models and queries, and assertive business rules can help produce a powerful graph database.
+
+## Graph Databases Chapter 2 Options for Storing Connected Data
