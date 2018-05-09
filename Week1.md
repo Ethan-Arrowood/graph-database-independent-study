@@ -76,3 +76,35 @@ I've struggled with this exact issue when thinking about projects. Without a gra
 Schema free graph databases allow for "frictionless development and graceful systems maintenance". Due to the schema free nature, some may argue this can be risky but the book states that it simply calls forth a "far more visible and actionable kind of governance." Test driven development, well articulated data models and queries, and assertive business rules can help produce a powerful graph database.
 
 ## Graph Databases Chapter 2 Options for Storing Connected Data
+
+Relational databases were initially designed to codify paper forms and tabular structures--they struggle when attempting to model multi-relational 'real world' structures.
+
+Favorite quote:
+> Ironically, relational databases deal poorly with relationships.
+
+As outlier data multiples, relational database model struggles with large join tables, sparsely populated rows, and null-checking logic. Increase in connectedness translates to increased joins (which negatively decrease performance and make it difficult to expand existing databases to changing business needs).
+
+All in all relational databases experience incredible performance degradation when trying to model recursive relations. Modeling a 'real' situation requires lots of flexibility. The schema rigidness of relational databases strips away this flexibility and make coding a challenge. Graph databases solve all of these issues.
+
+NOSQL databases (key-value, document, or column-oriented) store set of disconnected documents/values/columns. Makes it very to difficult to use them for connected data and graphs.
+
+One strategy for emulating relations in disconnected data is to essentially use foreign keys. But this requires joining data at the application level and can quickly become expensive (especially when running on mobile devices, micro controllers, or old machines).
+
+One major pitfall in this strategy is that identifies point one way only. They are **not** reflexive. This limits the types of queries we can run on our data.
+
+Also aggregate stores do not maintain data connectivity automatically. So if something is deleted, it will remain referenced in other entries.
+
+> On top of that, traversing the links remains expensive, because each hop requires an index lookup. This is because aggregates have no notion of locality, unlike graph databases, which naturally provide index-free adjacency through real—not reified—relationships ~ page 18
+
+### Comparing Relation Database to Neo4j (Graph DB)
+
+|Depth | RDBMS exec t | Neo4j exec t | Records returned|
+|------|--------------|--------------|-----------------|
+| 2    | 0.016        | 0.01         | ~2500           |
+| 3    | 30.267       | 0.168        | ~110000         |
+| 4    | 1543.505     | 1.359        | ~600000         |
+| 5    | Unfinished   | 2.132        | ~800000         |
+
+This table comes from **`Partner and Vukotic's`** experiment in their book _`Neo4j in Action`_. It represents the look up time on databases modeling 1,000,000 users with approximately 50 friends each.
+
+Graphs are this powerful because of **index-free adjacency** to traverse connected data rapidly.
