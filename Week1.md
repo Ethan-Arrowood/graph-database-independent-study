@@ -108,3 +108,82 @@ Also aggregate stores do not maintain data connectivity automatically. So if som
 This table comes from **`Partner and Vukotic's`** experiment in their book _`Neo4j in Action`_. It represents the look up time on databases modeling 1,000,000 users with approximately 50 friends each.
 
 Graphs are this powerful because of **index-free adjacency** to traverse connected data rapidly.
+
+## Learning Neo4j Chapter 1 Graphs and Graph Theory - an Introduction
+
+Note to me: will not be rewriting graph notes that were already written above. Only new information or really crucial points will be written in this section.
+
+### History of Graphs
+
+Invented by Leonhard Euler when he was trying to solve the _7 bridges of Konigsberg_ problem. It boils down to another pathfinding problem. 4 land masses, 7 bridges. Tour all land masses by only traversing each bridge at most 1 time. This has been now called an **Eulerian Walk** after Euler proved it was impossible using an abstract problem solving method and math ✨
+
+Lots of uses of graphs:
+
+- Social Studies ( social media connections )
+- Computer Science 
+  - UML Diagrams
+  - Hardware specifications
+- Biological Studies (human metabolic system)
+- Flow Network Problems
+- Route Problems (GPS!!!)
+- Web Search (Google's page rank algorithm)
+
+Some awesome route problem graph algorithms:
+
+- Dijkstra Algorithm
+  Best-known alg for calculating the shortest weighted path between two points in a graph. Uses the edge properties as weights or costs of that relationship between two nodes.
+- A* (A-star) Algorithm
+  Variation of Dijkstra's but uses a heuristic approach to predict more efficiently the shortest path. As it analyzes potential paths it holds a sorted priority queue of alternate path segments along the way. It is able to calculate the 'past path' and 'future path' cost of different options as it explores the route. 
+
+### Review questions
+
+1. False; Euler invented graphs in the early 18th century. More specifically in Euler's 1736 paper on solving the _7 bridges of Konigsberg_ problem.
+2. Accounting systems is one field where graphs are not predominantly used.
+3. False; graphs can be applied to a very large set of applications and research fields. It is very useful in modeling real-world scenarios and fast changing business needs.
+
+## Learning Neo4j Chapter 2 Graph Databases - Overview
+
+Basic definition of a **database**: Any kind of organized collection of data. Not all databases require a management system (i.e. spreadsheets or file-based storage approached). A database management system (DBMS) is a set of computer programs that manage a database.
+
+To reiterate: Relational Databases suck with complex relation modelling because of super expensive join operations.
+
+What makes the Property Graph Model unique and awesome? **Index Free Adjacency**. You can find adjacent/neighboring nodes without having to do an index lookup. It is the key to the performance characteristics of the property graph model.
+
+The Property Graph Model is optimized for:
+
+- Directed Graphs: The links between nodes have a direction
+- Multirelational Graphs: Multiple relationships between two nodes that are the same
+- Storing key-value paris as the properties of the nodes and relationships
+
+Property Graph Databases have no fixed schema. This doesn't mean you can't have one (it is recommended that you do), but the database itself does not require it to function properly. Because of this it is very good for dealing with semi-structured data. 
+
+Some key characteristics:
+
+- Nodes and node properties are quite simple. Act very similar to records/rows in a table that have fields/columns you can store/access data to/from. 
+- Relationships must always have a start and end point; therefor having a direction. Cannot be dangling, but can be self-referencing. 
+  - **Relationships are explicit**: Not inferred by some constraint or established at query time through join operations. They are "equal citizens" in the database and have the same expressive power of nodes representing entities. 
+  - **Relationships can have properties too**: This is where the magic can really show. You can store quite literally anything necessary about the context of a relationship within the relationship object. Unlike relational databases this can provide a incredible level of expression to your data model.
+
+### Node Labels
+
+A powerful addition to the property graph model allows for the simple creation of subgraphs by simply defining labels for nodes. This has many additional benefits such as quick analysis on a specific set of data.
+
+### Relationship Types
+
+Another powerful function similar to that of node labels. These are mandatory for all relationships and are used during complex, deep traversals. 
+
+### Why use Graph Databases
+
+This has been noted before but to reiterate the quick load functionality and **Extract, Transform, Load (ETL)** properties of a Property Graph Database have incredible performance gains on relational and other NOSQL databases. Property Graph Model allows you to develop as database needs change. 
+
+There are times when a graph database is **not** the best option.
+
+- Large, set-oriented queries. When you need to return a large set of data with little to no joins, sometimes relational models will be more performant than a graph database.
+- Graph global operations - use a Graph Compute/Processing Engine instead.
+- Simple, aggregate-oriented queries. Graph database are great for complex queries. Key-Value and Document stores are better at simpler 'flat' or aggregate queries. Low complexity problems can often be implemented using a low complexity database like a key-value store.
+
+### Test Questions
+
+1. Navigational databases are the most similar to graph databases
+2. true. Property Graph model is made up of nodes, relationships, and proprietary elements.
+3. false. Aggregate queries are best run on key-value or document stores.
