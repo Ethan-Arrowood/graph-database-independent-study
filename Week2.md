@@ -81,7 +81,78 @@ This clause specifies what to be returned to the client. It can return nodes, re
 - `START`
   Specifies one or more explicit starting points--nodes or relationships--in the graph. (START is deprecated in favor of specifying anchor points in a MATCH clause.)
 
-Resume reading at page 32
+### Comparing Relational and Graph DBM systems
+
+> Despite being graphs, E-R diagrams immediately demonstrate the shortcomings of the relational model for capturing a rich domain. Although they allow relationships to be named (something that graph databases fully embrace, but which relational stores do not), E-R diagrams allow only single, undirected, named relationships between entities. In this respect, the relational model is a poor fit for real-world domains where relationships between entities are both numerous and semantically rich and diverse. (Page 34)
+
+Another pit fall of the relational model is that it uses foreign keys to relate nodes. This adds a level of complexity to the database design that is only their to serve `join` operations during queries.
+
+RDBMS can quickly become obsolete. As each model is tailored to the current problem and business requirements, making changes requires complex overhead and in some extreme cases, entire database redesigns.
+
+Structural changes in a database is referred to as _migration_. Database refactoring is slow, risky, and expensive.
+
+> Relational databases—with their rigid schemas and complex modeling characteristics—are not an especially good tool for supporting rapid change. (Page 38)
+
+#### Graph Modeling
+
+Early stages are quite similar; whiteboard sketching and domain design. Following that, transform the domain into a graph-like model. This model can now be enriched to meet business needs; add labels, properties, and define relationships. 
+
+The domain model is very close to the graph model so by ensuring the correctness of the domain model, the corresponding graph model generally improves. _What you sketch on the whiteboard is typically what you store in the database_.
+
+When designing a graph model one should also consider the queries they will be running on the graph. This is called a _design for queryability_ mindset. This requires an understanding of the end-user goals.
+
+For an in depth example of a GDBMS refer to pages ~40-45.
+
+When instantiating a Graph Database it is important to use one large CREATE statement. If any node or relationship fails, nothing will be added. When you add new data to the graph it is good to use MERGE as it will ensure that a particular subgraph structure is in place once the command has executed.
+
+> In practice, we tend to use CREATE when we’re adding to the graph and don’t mind duplication, and MERGE when duplication is not permitted by the domain.
+
+### Indexes
+
+(in short)
+
+Cypher allows the user to create indexes per label and property combinations. For unique props, one can also specify constraints to ensure uniqueness. Indexes are populated in the background and become available once they are built. Look ups don't require indexes but indexes can improve lookup.
+
+### Constraining Matches
+
+Constrain graph matches using the WHERE clause. It allows for the elimination of matched subgraphs from the results by:
+
+- certain paths that must be present (or absent) in the matched subgraphs.
+- nodes must have certain labels or relationships with certain names.
+- specific properties on matched nodes and relationships must be present (or absent), irrespective of their values.
+- certain properties on matched nodes and relationships must have specific values.
+- other predicates must be satisfied
+
+Example:
+
+```cypher
+MATCH   (theater:Venue {name:'Theatre Royal'}),
+        (newcastle:City {name:'Newcastle'}),
+        (bard:Author {lastname:'Shakespeare'}),
+        (newcastle)<-[:STREET|CITY*1..2]-(theater)
+          <-[:VENUE]-()-[:PERFORMANCE_OF]->()
+          -[:PRODUCTION_OF]->(play)<-[w:WROTE_PLAY]-(bard)
+WHERE w.year > 1608
+RETURN DISTINCT play.title AS play
+```
+
+This query returns all plays from the Theatre Royal that occurred during Shakespeare's _final period_.
+
+### RETURN clause
+
+The return clause allows for further processing before returning the data to the user. For example the clause `DISTINCT` can be used to only return unique results. `count()` also exists to return the number of something (nodes/relationships).
+
+### Identifying Nodes and Relationships
+
+Modeling process designed for queryability:
+
+1. Describe the client or end-user goals that motivate our model.
+2. Rewrite these goals as questions to ask of our domain.
+3. Identify the entities and the relationship that appear in these questions.
+4. Translate these entities and the relationships into Cypher path expressions.
+5. Express the questions we want to ask of our domain as graph patterns using path expression similar to the ones we used to model the domain.
+
+Pay attention to the language used when describing the domain. Nouns become labels, verbs become relationships, proper nouns refer to instances.
 
 ## Learning Neo4j Chapter 3
 
