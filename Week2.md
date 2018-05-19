@@ -156,6 +156,86 @@ Pay attention to the language used when describing the domain. Nouns become labe
 
 ## Learning Neo4j Chapter 3
 
+Neo4j was built from the ground up to support graph data. It started a _graph library_ for dealing with connected data but soon developed into what it is today.
+
+It is ACID-compliant:
+
+- Atomicity:
+  Transactions are all or nothing. If one part fails then the entire transaction needs to be rolled back.
+- Consistency:
+  Only valid data is saved. This is similar to how relational models use _schemas_. In Neo4j this prohibits dangling relationships or invalid data.
+- Isolation:
+  Transactions do not affect each other. This boils down to the sequential order of operations. If something is being written to the db at the same time its being read; an **isolated** database should return the _old_ data for the read operation until the write operation completes.
+- Durability:
+  Written data will not be lost. Persisted storage and transaction commit logs are always written to disk.
+
+Neo4j is built for **online transaction processing**. Queries need to resolved in milliseconds--not seconds or minutes. 
+
+### OLTP vs OLAP
+
+The following table is copied from page 47.
+
+Online Transaction Process (OLTP) & Online Analytical Processing (OLAP)
+
+|  | **Online Transaction Processing** (Operational System) | **Online Analytical Processing** (Analytical System, aka data warehouse) |
+| -- | -- | -- |
+| Source of data | Operational data; are the original source of the data | Consolidation data; OLAP data comes from various OLTP dbs |
+| Purpose of data | Control and run fundamental business tasks | Help with planning, problem solving, and decision support |
+| What the data provides | Reveals a snapshot of ongoing business processes | Multidimensional views of various kinds of business activities |
+| Inserts and updates | Short and fast inserts and updates initiated by end users | Periodic long-running batch jobs refresh the data |
+| Queries | Relatively standarized and simple queries returning relatively few records | Often complex queries involving aggregations |
+| Processing speed | Very fast | Depends on amnt of data involved; batch data refreshes and complex queries may take many hours |
+| Space requirements | relatively small if historical data is archived | larger due the existence of aggregation structures and historical data. |
+| Database design | Highly normalized with many tables | typically de-normalized with fewer tables; uses star/snowflake schemas |
+| Backup and recovery | backs up religiously; operational data is critical to run the business. Data loss can be catastrophic. | Some systems simply reload OLTP data instead of backing up |
+
+Neo4j is currently on the OLTP side; but can be repurposed for certain OLAP tasks.
+
+### Scalability
+
+Neo4j is designed to scale. The Enterprise edition even has a clustering solution that has been proven to support even the most challenging workloads.
+
+It allows for both **horizontal** and **vertical** scalability.
+
+- Horizontal:
+  Adding more machines to the cluster and distributing the load over the cluster members
+- Vertical:
+  Adding more horsepower (CPU, memory, disks, etc.) to the machines that are cluster members
+
+### Cypher
+
+Declarative, pattern-matching query language that makes graph database management systems understandable and workable for any user.
+
+It declarative nature allows the user to state exactly what they are looking for using patterns that are easy to understand. In an imperative language one would have to _tell_ the database instead of just request.
+
+Cypher was designed to be easy to use and supply a _should just be there_ ideology for data.
+
+### Sweet spot use cases
+
+- Complex, Join-Intensive Queries
+  (This has already been discussed)
+- Path Finding queries
+  See whether a path actually exists, look for optimal paths, variability of paths, alternate routes, number of connections
+
+  Considered "Graph Local" and are performed "in the clickstream", therefore performed in near-real-time data.
+
+### Committed to Open Source ✨
+
+Why is Neo4j committed to providing its open source database?
+
+- Lower chance of vendor lock-in: since the code is readily available, software developers can read and edit (extend, fix, audit, etc.) the code at will.
+- Better security: as the code is consistently under public scrutiny it is intrinsically more secure.
+- Easier support and troubleshooting: as every party has full access to code it is easier to produce logs and pinpoint runtime issues
+- More innovation through extensibility: by exposing source code more developers can get their hands on the software and potentially fix bugs or issues that the main developers have overlooked.
+- Supporting research: OSS allows researchers to use the software for free
+- Cheaper: With a "fair" licensing model, users are only required to pay for the software if they plan on using it without contributing back. This allows business to start small with a limited investment and grow gradually as the use cases expand.
+
+### Test Questions:
+
+1. True, Neo4j is an ACID-compliant database
+2. The Enterprise edition is available
+3. False, Neo4j is available for windows as well as Linux/Unix/OS X systems
+
 ## Learning Neo4j Chapter 4
 
 ## Additional reading
