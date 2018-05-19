@@ -238,6 +238,55 @@ Why is Neo4j committed to providing its open source database?
 
 ## Learning Neo4j Chapter 4
 
+### Four Fundamental Data Constructs
+
+- **Nodes**: typically used to store entity information
+- **Relationships**: used to connect nodes to one another explicitly. Always have a type, start- and end- nodes, and a direction. They can be self-referencing/looping, never dangling.
+- **Properties**: nodes and relationships are containers for properties.
+- **Labels**: a means to quickly and efficiently create subgraphs. Primarily used for indexing and limited schema constraints.
+
+### Modeling
+
+Graph structured modeling has already been noted extensively above; however, _Learning Neo4j_ highlights some additional key points.
+
+Starting with a basic domain description:
+
+- Extract entities by looking at the nouns
+- Extract properties by looking at the adjectives
+- Extract relationships by looking at the operating verbs
+
+😆 _Learning Neo4j_ actually uses the exact same example from _Graph Databases_.
+
+Reiterating key points:
+
+Always design for query-ability. There is no _one perfect way to model_ in a graph database, but by modeling for business needs, the developer experience will be heightened.
+
+Align relationships with use cases. Creating unnecessary relationships can have adverse affects on a graph database. 
+
+Look for n-ary relationships ~ they can often be indicators for a node.
+
+### Granulate Nodes
+
+Similar to relational normalization; graph databases excel when data is stored in a granular format. Often times developers designing a graph model will look at a node and its properties and want to make the properties their own nodes. This practice is okay, but sometimes unnecessary. Instead, developers should consult their intended queries. If it makes sense to transform a property into a node; do it!
+
+> Traversing through a node is often easier and faster than evaluating properties for each and every path.
+
+### in-graph indexes
+
+Taking the granulate pattern another step further, sometimes you can use nodes and relationships to create an in-graph index.
+
+These index structures are often used to deal with time data in a graph structure. Using _time trees_ developers can connect subgraphs to time nodes instead of putting timestamps as properties on every node or relationship.
+
+### Dense Nodes 
+
+When one node has many thousands of relationship connections to other nodes it considered a dense node. This can cause dramatic performance decrease during query time so Neo4j recommends the use of _meta nodes_ to "fan out" the density.
+
+### Test questions
+
+1. Four fundamental data constructs are: node, relationships, property, and label
+2. normalization is not expensive in a graph database model.
+3. Dense nodes are solved by a fan-out technique.
+
 ## Additional reading
 
 ### Index free adjacency [blog post](https://medium.com/@dmccreary/how-to-explain-index-free-adjacency-to-your-manager-1a8e68ec664a)
