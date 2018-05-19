@@ -33,6 +33,7 @@ Readings:
 Readings: 
 - *Graph Databases* Chapter 3
 - *Learning Neo4j* Chapters 3 & 4
+- Index Free Adjacency [blog post](https://medium.com/@dmccreary/how-to-explain-index-free-adjacency-to-your-manager-1a8e68ec664a)
 
 ## Week 3 (21/05 - 25/05)
 **Goal:** Focus on learning Cypher Language
@@ -40,11 +41,20 @@ Readings:
 Readings:
 - *Learning Neo4j* Chapter 3 & Appendix B
 
+Developer Work:
+- Produce and graph database model
+- Refine the model and list example queries
+
 ## Week 4 (28/05 - 01/06) 1 Day off
 **Goal:** Continue learning Cypher language
 
 Readings:
 - *Neo4j Developer Manual* Chapter 3
+
+Developer Work:
+- Using the database model from week 3, code the appropriate Cypher queries
+- Implement these queries on local hosted database
+- Reflect on the process
 
 ## Week 5 (04/06 - 08/06)
 **Goal:** Learn advanced Neo4j & Cypher
