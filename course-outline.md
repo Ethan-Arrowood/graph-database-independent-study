@@ -33,13 +33,14 @@ Readings:
 Readings: 
 - *Graph Databases* Chapter 3
 - *Learning Neo4j* Chapters 3 & 4
-- Index Free Adjacency [blog post](https://medium.com/@dmccreary/how-to-explain-index-free-adjacency-to-your-manager-1a8e68ec664a)
+- [Index Free Adjacency](https://medium.com/@dmccreary/how-to-explain-index-free-adjacency-to-your-manager-1a8e68ec664a) blog post
 
 ## Week 3 (21/05 - 25/05)
 **Goal:** Focus on learning Cypher Language
 
 Readings:
 - *Learning Neo4j* Chapter 3 & Appendix B
+- [Facts as Nodes](https://markhneedham.com/blog/2015/12/04/neo4j-facts-as-nodes/) blog post
 
 Developer Work:
 - Produce and graph database model
