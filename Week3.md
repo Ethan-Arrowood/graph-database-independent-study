@@ -84,4 +84,20 @@ Now, even though the cypher query is slightly more complex, it can tell us so mu
 
 I've completed a more verbose model. There is still some additional properties I'd like to add, but this is a good start to the model.
 
-![Full Model](/images/week3/fullModel.png) 
+![Full Model](/images/week3/fullModel.png)
+
+```cypher
+CREATE (e:Camper {name:"Ethan"})-[:ATTENDED]->(s2013:Summer {year:2013})
+CREATE (a:Camper {name:"Alex"})-[:ATTENDED]->(s2015:Summer {year:2015})
+CREATE (d:Department {name:"Campcraft"})
+CREATE (:Rank {rank:"Loki"})<-[:RANK]-(t:TestCollection)-[:DEPARTMENT]->(d)
+CREATE (t)-[:CONTAINS]->(fb:Test {name:"Fire Building"})-[:DEPARTMENT]->(d)
+CREATE (t)-[:CONTAINS]->(h:Test {name:"Hiking"})-[:DEPARTMENT]->(d)
+CREATE (t)-[:CONTAINS]->(kt:Test {name:"Knot Tieing"})-[:DEPARTMENT]->(d)
+CREATE (e)-[:COMPLETED]->(ct1:CompletedTest {withCounselor:"Sara"})-[:TEST]->(fb)
+CREATE (e)-[:COMPLETED]->(ct2:CompletedTest {withCounselor:"Nick"})-[:TEST]->(h)
+CREATE (a)-[:COMPLETED]->(ct3:CompletedTest {withCounselor:"Andy"})-[:TEST]->(kt)
+CREATE (ct1)-[:WHEN]->(s2013)
+CREATE (ct2)-[:WHEN]->(s2013)
+CREATE (ct3)-[:WHEN]->(s2015)
+```
