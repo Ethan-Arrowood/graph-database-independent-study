@@ -244,3 +244,33 @@ Even though both Anne and Carol have blue eyes, 'blue' is only returned once in 
 ### Comments
 
 ` // ` double slashes all the way
+
+## Reflection
+
+Today I spent 5+ hours messing around with Cypher, Neo4j and JavaScript. I used a JSON file I had from a previous project and worked on writing a Cypher query that would import it into Neo4j. This task turned out to be harder than I originally thought, plus it took a many failed attempts for me to learn that I can easily create multiple nodes and relationships with only a few lines of Cypher.
+
+The query I wound up using in the end is this:
+```cypher
+UNWIND $data AS data
+CREATE (d:Department {name: data.department})
+WITH data, d
+UNWIND data.tests as rt
+MERGE (r:Rank {name: rt.rank})
+CREATE (tc:TestCollection {name: d.name + r.name}),
+      (tc)-[:DEPARTMENT]->(d),
+      (tc)-[:RANK]->(r)
+WITH d, rt, tc
+UNWIND rt.tests as test
+CREATE (t:Test {name: test}),
+      (tc)-[:TEST]->(t)
+```
+
+From developing this query I learned a lot about the clauses `UNWIND`, `CREATE`, `MERGE`, and `WITH`. 
+
+First, the `UNWIND` clause is kind of like a forEach loop (but don't get it confused with the actual `FOREACH` clause as it operates quite differently). The `UNWIND` command allowed me to iterate over an array of objects; I actually used it to iterate over multinested lists (notice how there are 3 `UNWIND` uses). During each iteration I can add the entry to the query namespace allowing it to be piped into other clause via the `WITH` command.
+
+One big issue I had was the use of `MERGE` and `CREATE`. They are both very similar, but `MERGE` won't create another node if it can find it in the graph. I utilize this when creating the Rank nodes as I only wanted 4 of them, but I would need them to have multiple relationships with TestCollection nodes. This is easier to visualize than it is to type so please refer to the included images for more details.
+
+Finally an important detail is the use of `WITH` clause. After the `CREATE` and `MERGE` clauses are used I need to pipe the new entites (nodes, relationships) to the next part of the query. I believe this query can be considered to have 3 parts (separated by each `UNWIND` clause), but I'm not 100% certain.
+
+Also, I was able to do all of this using Node.js 10.3.0, JavaScript, and some JSON data. The data itself was manipulated via the `modify_data.js` file that uses Node.js fileSystem api and some messy ES6 array methods to build a usable JSON object for the query.
