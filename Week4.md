@@ -103,6 +103,7 @@ Comprises of:
 Composite values can also contain `null`.
 
 Summary:
+
 | Type | Property | Structural | Composite |
 | ---- | -------- | ---------- | --------- |
 | Can be returned from Cypher Queries | ✅ | ✅ | ✅ | 
