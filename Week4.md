@@ -220,6 +220,7 @@ RETURN n
 ### Operators
 
 Basics
+
 | Operator Type | Example |
 | - | - |
 | General | `DISTINCT`, `.` for property access, `[]` for dynamic property access |
