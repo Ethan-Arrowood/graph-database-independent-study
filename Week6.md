@@ -67,3 +67,17 @@ Can be used in conjucntion with the Core API to perform declarative operations o
 - Core API - allows developers to fine-tune queries. When written correctly can reach faster performance than other options. Downside is that they are more verbose and complicated. When the graph structure changes these queries tend to break because of how dependent they are on the underlying graph structure. 
 - Traversal Frameowrk - loosely coupled with the Core API. When independent can be easier to implement than a Core API query. Less performant than Core API 
 - Both are used for edge cases. Cypher works for everyday queries and will usually suffice for web app use cases. 
+
+### Nonfunctional Characteristics
+
+Neo4j is ACID complient. This shows its dependability that can be achieved by a graph database. This parallels to the enterprise-class relational database management systems.
+
+**Transactions** in Neo4j are semantically identical to traditional db transactions. Writes occur within a transaction context. Write lock are taken for consistency purposes and on successful completion the changes are flushed to disk and write locks released. 
+
+Writes are isolated and multiple transaction attepmts on the same element are serialized and run one after another.
+
+Recovery is handled by the DB automatically fetching the transaction logs and rerunning any transactions. Because they are idempotent, running a transaction already completed will do nothing. Neo4j also recommends the use of database clusters for redundency recovery.
+
+In clusters, Neo4j can implement a write-master, read-slave set up. It can also implement a write-through-slave topology which can increase throughput. 
+
+Idiomatic queries are predictable and can utilize the cache of the DB system for increased performance. Unidiomatic queries (essentially random lookups) are slower and uncharacteristic to Neo4j's methodology.
