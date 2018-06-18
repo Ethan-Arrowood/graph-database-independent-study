@@ -1,0 +1,471 @@
+{
+  "departments": [
+    "Swimming",
+    "Boating",
+    "CampCraft",
+    "Exploring",
+    "Sailing",
+    "Archery",
+    "Athletics",
+    "Photography",
+    "Tennis",
+    "Riflery",
+    "Arts",
+    "Shop",
+    "Music",
+    "Biking"
+  ],
+  "testPerRank": [
+    [6, 10, 10, 10],
+    [5, 8, 8, 8],
+    [7, 10, 9, 4],
+    [11, 11, 3, 1],
+    [6, 3, 7, 4],
+    [5, 10, 4, 4],
+    [5, 5, 5, 5],
+    [4, 5, 2, 2],
+    [4, 4, 6, 5],
+    [5, 4, 4, 4],
+    [4, 3, 3, 3],
+    [4, 4, 4, 2],
+    [3, 3, 3, 3],
+    [8, 7, 10, 9]
+  ],
+  "testsByDept": {
+    "Swimming": {
+      "loki": {
+        "lokiSw0": "Crawl",
+        "lokiSw1": "Elem. Back",
+        "lokiSw2": "Survival Stroke",
+        "lokiSw3": "Jumps/Dives",
+        "lokiSw4": "Tread Water",
+        "lokiSw5": "Safety Skills"
+      },
+      "tyr": {
+        "tyrSw0": "Survival Test",
+        "tyrSw1": "Crawl",
+        "tyrSw2": "Back Crawl",
+        "tyrSw3": "Breast",
+        "tyrSw4": "Side Stroke",
+        "tyrSw5": "Sculling",
+        "tyrSw6": "Turns",
+        "tyrSw7": "Jumps/Dives",
+        "tyrSw8": "Safety Skills",
+        "tyrSw9": "Mask/Snorkel"
+      },
+      "thor": {
+        "thorSw0": "Crawl",
+        "thorSw1": "Breast",
+        "thorSw2": "Side Stroke",
+        "thorSw3": "Back Crawl",
+        "thorSw4": "Jumps and Dives",
+        "thorSw5": "Lifesaving",
+        "thorSw6": "Surface Dives",
+        "thorSw7": "Safety Skills",
+        "thorSw8": "Mask/Snorkel",
+        "thorSw9": "One Mile Swim"
+      },
+      "odin": {
+        "odinSw0": "Crawl",
+        "odinSw1": "Breast",
+        "odinSw2": "Back",
+        "odinSw3": "Fly",
+        "odinSw4": "Turns",
+        "odinSw5": "Coach Assist",
+        "odinSw6": "Basic Water Safety",
+        "odinSw7": "Albatross",
+        "odinSw8": "Guarding",
+        "odinSw9": "Teaching"
+      }
+    },
+    "Boating": {
+      "loki": {
+        "lokiBo0": "Knowledge",
+        "lokiBo1": "Safety Rules",
+        "lokiBo2": "Basic Rowing",
+        "lokiBo3": "Boat Landings",
+        "lokiBo4": "Paddling"
+      },
+      "tyr": {
+        "tyrBo0": "Survival Test",
+        "tyrBo1": "Knowledge",
+        "tyrBo2": "Kayak Safety",
+        "tyrBo3": "Tyr Strokes",
+        "tyrBo4": "Kayak Strokes",
+        "tyrBo5": "Swamp Canoe",
+        "tyrBo6": "Bow Landings",
+        "tyrBo7": "Obstacle Course"
+      },
+      "thor": {
+        "thorBo0": "Knots",
+        "thorBo1": "Canoe Strokes",
+        "thorBo2": "Canoe Rescue",
+        "thorBo3": "Canoe Obstacle",
+        "thorBo4": "Kayak Strokes",
+        "thorBo5": "Kayak Rescue",
+        "thorBo6": "Kayak Obstacle",
+        "thorBo7": "Solo Landings"
+      },
+      "odin": {
+        "odinBo0": "Portage",
+        "odinBo1": "Rapids",
+        "odinBo2": "Safety",
+        "odinBo3": "Canoe Repair",
+        "odinBo4": "Trip Planning",
+        "odinBo5": "Stern Trip",
+        "odinBo6": "Kayak Skills",
+        "odinBo7": "Teaching"
+      }
+    },
+    "CampCraft": {
+      "loki": {
+        "lokiCa0": "2 Trip Points",
+        "lokiCa1": "Firebuilding",
+        "lokiCa2": "Shelter",
+        "lokiCa3": "Knife Test",
+        "lokiCa4": "Knots",
+        "lokiCa5": "Philosophy",
+        "lokiCa6": "Map Skills"
+      },
+      "tyr": {
+        "tyrCa0": "4 Trip Points",
+        "tyrCa1": "No Trace Fire",
+        "tyrCa2": "One Pot Meal",
+        "tyrCa3": "Stove Use",
+        "tyrCa4": "Saw Use",
+        "tyrCa5": "Knots ",
+        "tyrCa6": "Shelter",
+        "tyrCa7": "Packing",
+        "tyrCa8": "First Aid",
+        "tyrCa9": "Map/Compass"
+      },
+      "thor": {
+        "thorCa0": "8 Trip Points",
+        "thorCa1": "Rainy Day Fire",
+        "thorCa2": "Stove Care",
+        "thorCa3": "Axe Use",
+        "thorCa4": "Lashings",
+        "thorCa5": "Solo Experience",
+        "thorCa6": "First Aid",
+        "thorCa7": "Trip Planning",
+        "thorCa8": "Trip Leading"
+      },
+      "odin": {
+        "odinCa0": "16 Trip Points",
+        "odinCa1": "First Aid",
+        "odinCa2": "Teaching",
+        "odinCa3": "Project"
+      }
+    },
+    "Exploring": {
+      "loki": {
+        "lokiEx0": "Exploration 1",
+        "lokiEx1": "Exploration 2",
+        "lokiEx2": "Exploration 3",
+        "lokiEx3": "5 Trees ID",
+        "lokiEx4": "5 Flowers ID",
+        "lokiEx5": "3 Ferns ID",
+        "lokiEx6": "Poison Ivy ID",
+        "lokiEx7": "Stop, Look, & Listen 1",
+        "lokiEx8": "Stop, Look, & Listen 2",
+        "lokiEx9": "Stop, Look, & Listen 3",
+        "lokiEx10": "Pay It Forward"
+      },
+      "tyr": {
+        "tyrEx0": "Exploration 1",
+        "tyrEx1": "Exploration 2",
+        "tyrEx2": "Exploration 3",
+        "tyrEx3": "5 Trees ID",
+        "tyrEx4": "5 Flowers ID",
+        "tyrEx5": "4 Clouds",
+        "tyrEx6": "5 Insects ID",
+        "tyrEx7": "Stop, Look, & Listen 1",
+        "tyrEx8": "Stop, Look, & Listen 2",
+        "tyrEx9": "Stop, Look, & Listen 3",
+        "tyrEx10": "Pay It Forward"
+      },
+      "thor": {
+        "thorEx0": "Lead/Teach",
+        "thorEx1": "Edible Plants",
+        "thorEx2": "Thor Project"
+      },
+      "odin": { "odinEx0": "Quality Project" }
+    },
+    "Sailing": {
+      "loki": {
+        "lokiSa0": "Parts/Terms",
+        "lokiSa1": "Knots",
+        "lokiSa2": "Safety Rules",
+        "lokiSa3": "Jib Handling",
+        "lokiSa4": "Rig/Stow",
+        "lokiSa5": "Capsize"
+      },
+      "tyr": {
+        "tyrSa0": "Parts/Terms",
+        "tyrSa1": "Crew",
+        "tyrSa2": "Tack & Jibe",
+        "tyrSa3": "Racing Theory",
+        "tyrSa4": "Knots",
+        "tyrSa5": "Mooring",
+        "tyrSa6": "Points of Sail"
+      },
+      "thor": {
+        "thorSa0": "Parts/Terms",
+        "thorSa1": "Sailboat Care",
+        "thorSa2": "Spinnaker",
+        "thorSa3": "Thor Skipper",
+        "thorSa4": "Nautical Navigation",
+        "thorSa5": "Emergencies",
+        "thorSa6": "Teaching"
+      },
+      "odin": {
+        "odinSa0": "Sailboat Care",
+        "odinSa1": "Knots",
+        "odinSa2": "Organize Race",
+        "odinSa3": "Teaching"
+      }
+    },
+    "Archery": {
+      "loki": {
+        "lokiAr0": "Position",
+        "lokiAr1": "Scoring",
+        "lokiAr2": "Aiming",
+        "lokiAr3": "Test",
+        "lokiAr4": "Knowledge"
+      },
+      "tyr": {
+        "tyrAr0": "Position",
+        "tyrAr1": "Scoring",
+        "tyrAr2": "Aiming",
+        "tyrAr3": "Test",
+        "tyrAr4": "Knowledge"
+      },
+      "thor": {
+        "thorAr0": "Position",
+        "thorAr1": "Aiming",
+        "thorAr2": "Test",
+        "thorAr3": "Knowledge"
+      },
+      "odin": {
+        "odinAr0": "Position",
+        "odinAr1": "Aiming",
+        "odinAr2": "Test",
+        "odinAr3": "Coaching"
+      }
+    },
+    "Athletics": {
+      "loki": {
+        "lokiAt0": "Fitness",
+        "lokiAt1": "Sport 1",
+        "lokiAt2": "Sport 2",
+        "lokiAt3": "Test 1",
+        "lokiAt4": "Test 2"
+      },
+      "tyr": {
+        "tyrAt0": "Fitness Form",
+        "tyrAt1": "Sport 1",
+        "tyrAt2": "Sport 2",
+        "tyrAt3": "Test 1",
+        "tyrAt4": "Test 2"
+      },
+      "thor": {
+        "thorAt0": "Fitness",
+        "thorAt1": "Sport 1",
+        "thorAt2": "Sport 2",
+        "thorAt3": "Test 1",
+        "thorAt4": "Test 2"
+      },
+      "odin": {
+        "odinAt0": "Fitness/Form",
+        "odinAt1": "Sport 1",
+        "odinAt2": "Sport 2",
+        "odinAt3": "Test 1",
+        "odinAt4": "Test 2"
+      }
+    },
+    "Photography": {
+      "loki": {
+        "lokiPh0": "35mm Camera",
+        "lokiPh1": "Developing",
+        "lokiPh2": "Printing",
+        "lokiPh3": "Four Prints"
+      },
+      "tyr": {
+        "tyrPh0": "35mm Camera",
+        "tyrPh1": "Solo Developing",
+        "tyrPh2": "Solo Printing",
+        "tyrPh3": "6 Advanced Prints"
+      },
+      "thor": { "thorPh0": "Instruct", "thorPh1": "6 Advanced Prints" },
+      "odin": { "odinPh0": "Project", "odinPh1": "Instruct" }
+    },
+    "Tennis": {
+      "loki": {
+        "lokiTe0": "Ground Strokes",
+        "lokiTe1": "Service",
+        "lokiTe2": "Scoring",
+        "lokiTe3": "Loki Terms"
+      },
+      "tyr": {
+        "tyrTe0": "Service",
+        "tyrTe1": "Volley",
+        "tyrTe2": "Skills",
+        "tyrTe3": "Terms"
+      },
+      "thor": {
+        "thorTe0": "Smash",
+        "thorTe1": "Lob",
+        "thorTe2": "Skills",
+        "thorTe3": "Terms",
+        "thorTe4": "Teaching (4)",
+        "thorTe5": "Linesman (2)"
+      },
+      "odin": {
+        "odinTe0": "Skills",
+        "odinTe1": "Terms",
+        "odinTe2": "Teaching (8)",
+        "odinTe3": "Umpire (2)",
+        "odinTe4": "Tournament"
+      }
+    },
+    "Riflery": {
+      "loki": {
+        "lokiRi0": "Safety Skills",
+        "lokiRi1": "Marksmanship",
+        "lokiRi2": "Sling Use",
+        "lokiRi3": "Scoring",
+        "lokiRi4": "Care/Cleaning"
+      },
+      "tyr": {
+        "tyrRi0": "Positions",
+        "tyrRi1": "Marksmanship",
+        "tyrRi2": "Sights"
+      },
+      "thor": {
+        "thorRi0": "Positions",
+        "thorRi1": "Marksmanship",
+        "thorRi2": "Coaching",
+        "thorRi3": "Knowledge"
+      },
+      "odin": {
+        "odinRi0": "Knowledge",
+        "odinRi1": "Marksmanship",
+        "odinRi2": "Organize Match",
+        "odinRi3": "Coaching"
+      }
+    },
+    "Arts": {
+      "loki": {
+        "lokiAr0": "Project 1",
+        "lokiAr1": "Project 2",
+        "lokiAr2": "Project 3",
+        "lokiAr3": "Materials"
+      },
+      "tyr": {
+        "tyrAr0": "Project 1",
+        "tyrAr1": "Project 2",
+        "tyrAr2": "Project 3",
+        "tyrAr3": "Materials"
+      },
+      "thor": {
+        "thorAr0": "Composition",
+        "thorAr1": "Teaching",
+        "thorAr2": "Project"
+      },
+      "odin": {
+        "odinAr0": "Materials",
+        "odinAr1": "Teaching",
+        "odinAr2": "Project"
+      }
+    },
+    "Shop": {
+      "loki": {
+        "lokiSh0": "Tools",
+        "lokiSh1": "Wood Terms",
+        "lokiSh2": "Design",
+        "lokiSh3": "Project"
+      },
+      "tyr": {
+        "tyrSh0": "Hand Tool ID",
+        "tyrSh1": "Power Tools",
+        "tyrSh2": "Project"
+      },
+      "thor": {
+        "thorSh0": "Tool Care",
+        "thorSh1": "Table Saw",
+        "thorSh2": "Design",
+        "thorSh3": "Project"
+      },
+      "odin": { "odinSh0": "Project", "odinSh1": "Teaching (8)" }
+    },
+    "Music": {
+      "loki": {
+        "lokiMu0": "Sing 'Skol'",
+        "lokiMu1": "Choir",
+        "lokiMu2": "Knowledge"
+      },
+      "tyr": {
+        "tyrMu0": "Musical",
+        "tyrMu1": "Camp/CF Song",
+        "tyrMu2": "Knowledge"
+      },
+      "thor": {
+        "thorMu0": "Lead or Solo",
+        "thorMu1": "Song Leading",
+        "thorMu2": "Knowledge"
+      },
+      "odin": {
+        "odinMu0": "Teaching (8)",
+        "odinMu1": "Performance",
+        "odinMu2": "Project"
+      }
+    },
+    "Biking": {
+      "loki": {
+        "lokiBi0": "Bike/Helmet Size",
+        "lokiBi1": "Bike Check",
+        "lokiBi2": "Road Safety",
+        "lokiBi3": "Brake Use",
+        "lokiBi4": "Gear Shifting",
+        "lokiBi5": "Downhill Control",
+        "lokiBi6": "Bike Parts",
+        "lokiBi7": "Tube Repair"
+      },
+      "tyr": {
+        "tyrBi0": "2 Trip Points",
+        "tyrBi1": "Obstacle Course",
+        "tyrBi2": "Tyr Riding Skills",
+        "tyrBi3": "Tool Names/Uses",
+        "tyrBi4": "Chain Clean/Lube",
+        "tyrBi5": "Gear/Brake Clean/Lube",
+        "tyrBi6": "Brake Pad Maintenance",
+        "tyrBi7": "Diagnosing The Bike",
+        "tyrBi8": "Gear Adjustment",
+        "tyrBi9": "Saddle Adjust/Replace"
+      },
+      "thor": {
+        "thorBi0": "4 Trip Points",
+        "thorBi1": "Advanced Obstacle",
+        "thorBi2": "Bike Lake",
+        "thorBi3": "Advanced Skills",
+        "thorBi4": "Plan/Lead Trip",
+        "thorBi5": "Lead Assembly",
+        "thorBi6": "Chainlink Remove",
+        "thorBi7": "Brake Cable Replace",
+        "thorBi8": "Gear Cable Adjustment",
+        "thorBi9": "Teaching (3)"
+      },
+      "odin": {
+        "odinBi0": "4 Trip Points",
+        "odinBi1": "Develop Obstacle",
+        "odinBi2": "Teaching (10)",
+        "odinBi3": "Hub Bearings Replace",
+        "odinBi4": "Crank Bearing Replace",
+        "odinBi5": "Headset Bearing Replace",
+        "odinBi6": "Pedal Bearing Replace",
+        "odinBi7": "Cog Removal",
+        "odinBi8": "Bike Assembly"
+      }
+    }
+  }
+}
