@@ -4,7 +4,8 @@
   "description": "",
   "main": "script.js",
   "dependencies": {
-    "neo4j-driver": "^1.6.1"
+    "neo4j-driver": "^1.6.1",
+    "react-window": "^1.0.0-alpha.3"
   },
   "devDependencies": {},
   "scripts": {
