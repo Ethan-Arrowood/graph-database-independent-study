@@ -1,16 +1,26 @@
 {
-  "name": "week4",
-  "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "neo4j-driver": "^1.6.1",
-    "react-window": "^1.0.0-alpha.3"
+    "@reach/router": "^1.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4",
+    "react-window": "^0.1.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "deploy": "npm run build && cd build && now --public --name camper-test-tracker -e NODE_ENV=\"production\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "precommit": "pretty-quick --staged"
   },
-  "author": "Ethan Arrowood",
-  "license": "ISC"
+  "devDependencies": {
+    "eslint-plugin-prettier": "^2.6.1",
+    "husky": "^0.14.3",
+    "prettier": "1.13.7",
+    "pretty-quick": "^1.6.0"
+  }
 }
