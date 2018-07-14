@@ -1,0 +1,68 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls {
+  width: 600px;
+  height: 120px;
+  background-color: #ddd;
+  margin: 10px 0 5px 0;
+}
+
+.search-bar {
+  width: 600px;
+  border: 1px solid #d9dddd;
+  border-bottom: none;
+}
+.search-bar > input {
+  margin: 0;
+  padding-left: 10px;
+  box-sizing: border-box;
+  border: none;
+  width: 600px;
+  height: 40px;
+  font-size: 1rem;
+}
+
+.list {
+  border: 1px solid #d9dddd;
+}
+
+.ListItemEven,
+.ListItemOdd {
+  padding-left: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.ListItemEven {
+  background-color: #f8f8f0;
+}
+
+.rank-badge {
+  font-size: 0.75rem;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 5px;
+  color: white;
+}
+
+.loki {
+  background-color: green;
+}
+.tyr {
+  background-color: blue;
+}
+.thor {
+  background-color: red;
+}
+
+.odin {
+  background-color: yellow;
+  color: black;
+}

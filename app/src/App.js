@@ -13,7 +13,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <Nav />
-        <Router>
+        <Router style={{ height: '100%' }}>
           <Home path="/" />
           <CamperList path="camper_list" />
           <TestManager path="test_manager" />

@@ -1,7 +1,5 @@
 .App {
-  text-align: left;
-}
-
-.App-intro {
-  font-size: large;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
