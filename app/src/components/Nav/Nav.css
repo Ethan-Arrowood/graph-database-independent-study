@@ -1,0 +1,12 @@
+.App-nav {
+  background-color: rgb(230, 230, 230);
+  border-bottom: 2px solid #222;
+  padding: 20px;
+}
+
+.App-nav-link {
+  padding: 10px 5px;
+  margin: 15px;
+  width: 150px;
+  text-decoration: none;
+}

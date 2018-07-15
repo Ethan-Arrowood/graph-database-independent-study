@@ -1,13 +1,15 @@
-const neo4j = require('neo4j-driver').v1;
-const data = require('./data.json');
-const queries = require('./queries.json');
+const neo4j = require("neo4j-driver").v1;
+const data = require("./data.json");
+const queries = require("./queries.json");
 
-const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "Thor@2013"));
+const driver = neo4j.driver(
+  "bolt://localhost",
+  neo4j.auth.basic("neo4j", "Thor@2013")
+);
 const session = driver.session();
 
 async function asyncForEach(array, callback) {
-  for (let i = 0; i < array.length; i++)
-    await callback(array[i], i, array)
+  for (let i = 0; i < array.length; i++) await callback(array[i], i, array);
 }
 
 // Don't run this but its good to keep as reference
@@ -56,13 +58,13 @@ Iterate over each test in the rank entry
 Create a new test node with a name property and create the TEST relationship from the TestCollection and Test
 */
 
-const query_data = require('./query_data.json')
+const query_data = require("./query_data.json");
 
 session
-  .writeTransaction(tx => tx.run( query, { data: query_data }))
+  .writeTransaction(tx => tx.run(query, { data: query_data }))
   .then(result => console.log(result.records))
   .catch(err => console.error(err))
   .finally(() => {
-    session.close()
-    driver.close()
-  })
+    session.close();
+    driver.close();
+  });

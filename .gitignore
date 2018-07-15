@@ -1,1 +1,3 @@
 readings/
+node_modules
+*.lock

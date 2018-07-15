@@ -1,0 +1,11 @@
+{
+  "name": "camper-test-tracker",
+  "alias": "camper-test-tracker",
+  "env": {
+    "NODE_ENV": "\"production\""
+  },
+  "public": true,
+  "engines": {
+    "node": "^10.0.0"
+  }
+}
