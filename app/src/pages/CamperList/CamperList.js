@@ -1,7 +1,7 @@
 import React from 'react'
 import './CamperList.css'
-import Controls from './Controls'
 import { FixedSizeList as List } from 'react-window'
+import NewCamperForm from './NewCamperForm'
 
 class ItemRenderer extends React.PureComponent {
   render() {
@@ -92,6 +92,7 @@ class CamperList extends React.Component {
   componentDidMount() {
     this.setState({ listData: this.state.campers })
   }
+
   render() {
     return (
       <div className="container">
@@ -113,6 +114,10 @@ class CamperList extends React.Component {
         >
           {props => <ItemRenderer {...props} data={this.state.listData} />}
         </List>
+        <div className="new-camper-form">
+          <p>New Camper</p>
+          <NewCamperForm />
+        </div>
       </div>
     )
   }
