@@ -1,4 +1,3 @@
-// Require the framework and instantiate it
 const fastify = require("fastify")({ logger: true });
 const neo4j = require("neo4j-driver").v1;
 const driver = neo4j.driver(
@@ -7,7 +6,6 @@ const driver = neo4j.driver(
 );
 const session = driver.session();
 
-// Declare a route
 fastify.get("/", async (request, reply) => {
   return { hello: "world" };
 });
@@ -31,7 +29,7 @@ fastify.addHook("onClose", (instance, done) => {
   driver.close();
   done();
 });
-// Run the server!
+
 const start = async () => {
   try {
     await fastify.listen(3001);
