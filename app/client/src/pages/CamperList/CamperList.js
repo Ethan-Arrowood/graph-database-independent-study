@@ -115,7 +115,6 @@ class CamperList extends React.Component {
           {props => <ItemRenderer {...props} data={this.state.listData} />}
         </List>
         <div className="new-camper-form">
-          <p>New Camper</p>
           <NewCamperForm />
         </div>
       </div>
