@@ -20,66 +20,24 @@ class ItemRenderer extends React.PureComponent {
   }
 }
 
+const fetchCamperData = async () => {
+  try {
+    const response = await fetch('/campers')
+    return response
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}
+
 class CamperList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      campers: [
-        {
-          name: 'Ethan Arrowood',
-          rank: 'Thor',
-          summers: [2008, 2009, 2010, 2011, 2012, 2013],
-        },
-        {
-          name: 'Alex Arrowood',
-          rank: 'Loki',
-          summers: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
-        },
-        {
-          name: 'Sara Liptrot',
-          rank: 'Odin',
-          summers: [2013, 2015, 2016, 2017, 2018],
-        },
-        {
-          name: 'Andy Mortimer',
-          rank: '',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'JD Kennedy',
-          rank: 'Loki',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Blake Himes',
-          rank: 'Tyr',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Bryan Partridge',
-          rank: 'Tyr',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Jeremy Cutler',
-          rank: 'Thor',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Tommy Reynolds',
-          rank: '',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-      ],
-      listData: [],
-      nameSearchValue: '',
-    }
-
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    camperData: null,
+    listData: [],
+    nameSearchValue: '',
   }
 
-  handleChange(e) {
+  handleChange = e => {
     let searchValue = e.target.value
     this.setState({
       nameSearchValue: searchValue,
@@ -90,8 +48,19 @@ class CamperList extends React.Component {
   }
 
   componentDidMount() {
+    this._fetchCampersRequest = fetchCamperData().then(camperData => {
+      this._fetchCampersRequest = null
+      this.setState({ camperData })
+    })
+
     this.setState({ listData: this.state.campers })
   }
+
+  // componentWillUnmount() {
+  //   if (this._fetchCampersRequest) {
+  //     this._fetchCampersRequest.cancel()
+  //   }
+  // }
 
   render() {
     return (
@@ -105,15 +74,17 @@ class CamperList extends React.Component {
             onChange={this.handleChange}
           />
         </div>
-        <List
-          className="list"
-          height={250}
-          itemCount={this.state.listData.length}
-          itemSize={35}
-          width={600}
-        >
-          {props => <ItemRenderer {...props} data={this.state.listData} />}
-        </List>
+        {this._fetchCampersRequest === null ? (
+          <List
+            className="list"
+            height={250}
+            itemCount={this.state.camperData.length}
+            itemSize={35}
+            width={600}
+          >
+            {props => <ItemRenderer {...props} data={this.state.camperData} />}
+          </List>
+        ) : null}
         <div className="new-camper-form">
           <NewCamperForm />
         </div>
