@@ -12,18 +12,18 @@ class ItemRenderer extends React.PureComponent {
         className={this.props.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
       >
         {camper.name}
-        <span className={`rank-badge ${camper.rank.toLowerCase()}`}>
+        {/*<span className={`rank-badge ${camper.rank.toLowerCase()}`}>
           {camper.rank}
-        </span>
+        </span>*/}
       </div>
     )
   }
 }
 
-const fetchCamperData = async () => {
+const fetchCamperData = async req => {
   try {
-    const response = await fetch('/campers')
-    return response
+    const response = await fetch(req)
+    return await response.json()
   } catch (err) {
     console.error(err)
     return []
@@ -32,35 +32,56 @@ const fetchCamperData = async () => {
 
 class CamperList extends React.Component {
   state = {
-    camperData: null,
-    listData: [],
+    camperData: [],
     nameSearchValue: '',
   }
 
+  _fetchCampersRequest = null
+
   handleChange = e => {
     let searchValue = e.target.value
-    this.setState({
-      nameSearchValue: searchValue,
-      listData: this.state.campers.filter(camper =>
-        camper.name.match(new RegExp(searchValue, 'i'))
-      ),
-    })
+    this.setState(
+      { nameSearchValue: searchValue },
+      this.fetchCampers(searchValue)
+    )
   }
 
-  componentDidMount() {
-    this._fetchCampersRequest = fetchCamperData().then(camperData => {
-      this._fetchCampersRequest = null
-      this.setState({ camperData })
-    })
-
-    this.setState({ listData: this.state.campers })
+  fetchCampers = searchValue => {
+    if (this._fetchCampersRequest === null) {
+      const query = searchValue ? `/campers?search=${searchValue}` : '/campers'
+      console.log(query)
+      this._fetchCampersRequest = fetchCamperData(query).then(res => {
+        this._fetchCampersRequest = null
+        this.setState({ camperData: res.campers })
+      })
+    }
   }
 
-  // componentWillUnmount() {
-  //   if (this._fetchCampersRequest) {
-  //     this._fetchCampersRequest.cancel()
+  // fetchCamperData = req => {
+  //   this._fetchCampersRequest = this.query(req).then(res => {
+  //     this._fetchCampersRequest = null
+  //   })
+  // }
+
+  // query = async req => {
+  //   try {
+  //     const response = await fetch(req)
+  //     return await response.json()
+  //   } catch (err) {
+  //     console.error(err)
+  //     return []
   //   }
   // }
+
+  componentDidMount() {
+    this.fetchCampers()
+  }
+
+  componentWillUnmount() {
+    if (this._fetchCampersRequest) {
+      this._fetchCampersRequest.cancel()
+    }
+  }
 
   render() {
     return (
@@ -74,19 +95,22 @@ class CamperList extends React.Component {
             onChange={this.handleChange}
           />
         </div>
-        {this._fetchCampersRequest === null ? (
-          <List
-            className="list"
-            height={250}
-            itemCount={this.state.camperData.length}
-            itemSize={35}
-            width={600}
-          >
-            {props => <ItemRenderer {...props} data={this.state.camperData} />}
-          </List>
-        ) : null}
+        <List
+          className="list"
+          height={250}
+          itemCount={this.state.camperData.length}
+          itemSize={35}
+          width={600}
+        >
+          {/* this._fetchCampersRequest === null
+            ? props => <ItemRenderer {...props} data={this.state.camperData} />
+          : null */}
+          {props => <ItemRenderer {...props} data={this.state.camperData} />}
+        </List>
         <div className="new-camper-form">
-          <NewCamperForm />
+          <NewCamperForm
+            updateList={() => this.fetchCampers(this.state.nameSearchValue)}
+          />
         </div>
       </div>
     )

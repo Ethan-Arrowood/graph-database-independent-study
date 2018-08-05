@@ -57,7 +57,7 @@ class NewCamperForm extends React.Component {
     this.setState({ [name]: value })
   }
 
-  onSubmit(values) {
+  onSubmit(values, form) {
     values = {
       name: values.name,
       sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
@@ -73,7 +73,7 @@ class NewCamperForm extends React.Component {
       RETURN c.name as name, collect(s.year) as sac
     `
 
-    const createCamperRequest = new Request('/create-camper', {
+    const createCamperRequest = new Request('/campers', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -92,6 +92,8 @@ class NewCamperForm extends React.Component {
           formSuccess: `Created camper: ${res.name}`,
           createCamperResult: res,
         })
+        form.reset()
+        this.props.updateList()
       })
       .catch(err => console.log(err))
   }
@@ -102,7 +104,7 @@ class NewCamperForm extends React.Component {
         <p>New Camper {this.state.formSuccess || null}</p>
         <Form
           onSubmit={this.onSubmit}
-          render={({ handleSubmit, submitting }) => (
+          render={({ handleSubmit, form, submitting }) => (
             <form onSubmit={handleSubmit}>
               <div>
                 <Field

@@ -11,7 +11,7 @@ fastify.get("/", async (request, reply) => {
 });
 
 fastify.post("/campers", async (request, reply) => {
-  const session = fastify["neo4j-session"];
+  const session = request["n4jSession"];
   const { query, params } = request.body;
   try {
     let res = await session.writeTransaction(tx => tx.run(query, params));
@@ -28,17 +28,20 @@ fastify.post("/campers", async (request, reply) => {
 fastify.get("/campers", async (request, reply) => {
   const session = request["n4jSession"];
 
+  let query = "MATCH (c:Camper)-[:ATTENDED]->(s:Summer)";
+
+  if (request.query.search)
+    query += `WHERE c.name =~ '(?i).*${request.query.search}.*'`;
+
+  query +=
+    "RETURN {name: c.name, soc: collect(s.year)} as campers\nORDER BY campers.name";
+
+  console.log(query);
+
   try {
-    let res = await session.readTransaction(tx =>
-      tx.run(
-        `MATCH (c:Camper)-[:ATTENDED]->(s:Summer)
-          RETURN {name: c.name, soc: collect(s.year)}`
-      )
-    );
+    let res = await session.readTransaction(tx => tx.run(query));
     const campers = res.records.map(record => record.get(0));
-    return {
-      campers
-    };
+    return { campers };
   } catch (err) {
     return err;
   }
@@ -46,7 +49,11 @@ fastify.get("/campers", async (request, reply) => {
 
 fastify.addHook("onRequest", (req, res, next) => {
   try {
-    fastify.decorateRequest("n4jSession", driver.session());
+    if (fastify.hasRequestDecorator("n4jSession")) {
+      req.n4jSession = driver.session();
+    } else {
+      fastify.decorateRequest("n4jSession", driver.session());
+    }
   } catch (err) {
     fastify.log.error(err);
   }
