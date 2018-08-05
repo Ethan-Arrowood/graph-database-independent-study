@@ -20,16 +20,6 @@ class ItemRenderer extends React.PureComponent {
   }
 }
 
-const fetchCamperData = async req => {
-  try {
-    const response = await fetch(req)
-    return await response.json()
-  } catch (err) {
-    console.error(err)
-    return []
-  }
-}
-
 class CamperList extends React.Component {
   state = {
     camperData: [],
@@ -50,28 +40,22 @@ class CamperList extends React.Component {
     if (this._fetchCampersRequest === null) {
       const query = searchValue ? `/campers?search=${searchValue}` : '/campers'
       console.log(query)
-      this._fetchCampersRequest = fetchCamperData(query).then(res => {
+      this._fetchCampersRequest = this.fetchCamperData(query).then(res => {
         this._fetchCampersRequest = null
         this.setState({ camperData: res.campers })
       })
     }
   }
 
-  // fetchCamperData = req => {
-  //   this._fetchCampersRequest = this.query(req).then(res => {
-  //     this._fetchCampersRequest = null
-  //   })
-  // }
-
-  // query = async req => {
-  //   try {
-  //     const response = await fetch(req)
-  //     return await response.json()
-  //   } catch (err) {
-  //     console.error(err)
-  //     return []
-  //   }
-  // }
+  fetchCamperData = async req => {
+    try {
+      const response = await fetch(req)
+      return await response.json()
+    } catch (err) {
+      console.error(err)
+      return []
+    }
+  }
 
   componentDidMount() {
     this.fetchCampers()
