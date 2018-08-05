@@ -12,85 +12,59 @@ class ItemRenderer extends React.PureComponent {
         className={this.props.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
       >
         {camper.name}
-        <span className={`rank-badge ${camper.rank.toLowerCase()}`}>
+        {/*<span className={`rank-badge ${camper.rank.toLowerCase()}`}>
           {camper.rank}
-        </span>
+        </span>*/}
       </div>
     )
   }
 }
 
 class CamperList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      campers: [
-        {
-          name: 'Ethan Arrowood',
-          rank: 'Thor',
-          summers: [2008, 2009, 2010, 2011, 2012, 2013],
-        },
-        {
-          name: 'Alex Arrowood',
-          rank: 'Loki',
-          summers: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
-        },
-        {
-          name: 'Sara Liptrot',
-          rank: 'Odin',
-          summers: [2013, 2015, 2016, 2017, 2018],
-        },
-        {
-          name: 'Andy Mortimer',
-          rank: '',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'JD Kennedy',
-          rank: 'Loki',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Blake Himes',
-          rank: 'Tyr',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Bryan Partridge',
-          rank: 'Tyr',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Jeremy Cutler',
-          rank: 'Thor',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-        {
-          name: 'Tommy Reynolds',
-          rank: '',
-          summers: [2013, 2014, 2015, 2016, 2017],
-        },
-      ],
-      listData: [],
-      nameSearchValue: '',
-    }
-
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    camperData: [],
+    nameSearchValue: '',
   }
 
-  handleChange(e) {
+  _fetchCampersRequest = null
+
+  handleChange = e => {
     let searchValue = e.target.value
-    this.setState({
-      nameSearchValue: searchValue,
-      listData: this.state.campers.filter(camper =>
-        camper.name.match(new RegExp(searchValue, 'i'))
-      ),
-    })
+    this.setState(
+      { nameSearchValue: searchValue },
+      this.fetchCampers(searchValue)
+    )
+  }
+
+  fetchCampers = searchValue => {
+    if (this._fetchCampersRequest === null) {
+      const query = searchValue ? `/campers?search=${searchValue}` : '/campers'
+      console.log(query)
+      this._fetchCampersRequest = this.fetchCamperData(query).then(res => {
+        this._fetchCampersRequest = null
+        this.setState({ camperData: res.campers })
+      })
+    }
+  }
+
+  fetchCamperData = async req => {
+    try {
+      const response = await fetch(req)
+      return await response.json()
+    } catch (err) {
+      console.error(err)
+      return []
+    }
   }
 
   componentDidMount() {
-    this.setState({ listData: this.state.campers })
+    this.fetchCampers()
+  }
+
+  componentWillUnmount() {
+    if (this._fetchCampersRequest) {
+      this._fetchCampersRequest.cancel()
+    }
   }
 
   render() {
@@ -108,14 +82,19 @@ class CamperList extends React.Component {
         <List
           className="list"
           height={250}
-          itemCount={this.state.listData.length}
+          itemCount={this.state.camperData.length}
           itemSize={35}
           width={600}
         >
-          {props => <ItemRenderer {...props} data={this.state.listData} />}
+          {/* this._fetchCampersRequest === null
+            ? props => <ItemRenderer {...props} data={this.state.camperData} />
+          : null */}
+          {props => <ItemRenderer {...props} data={this.state.camperData} />}
         </List>
         <div className="new-camper-form">
-          <NewCamperForm />
+          <NewCamperForm
+            updateList={() => this.fetchCampers(this.state.nameSearchValue)}
+          />
         </div>
       </div>
     )

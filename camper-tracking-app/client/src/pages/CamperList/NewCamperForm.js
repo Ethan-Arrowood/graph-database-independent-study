@@ -38,32 +38,23 @@ const SummerSelectorAdapter = ({ input, ...rest }) => (
 )
 
 class NewCamperForm extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      name: '',
-      sac: [],
-      formSuccess: null,
-      createCamperResult: null,
-    }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+  state = {
+    name: '',
+    sac: [],
+    formSuccess: null,
+    createCamperResult: null,
   }
 
-  handleChange(event) {
+  handleChange = event => {
     const { name, value } = event.target
     this.setState({ [name]: value })
   }
 
-  onSubmit(values) {
+  onSubmit = (values, form) => {
     values = {
       name: values.name,
       sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
     }
-
-    console.log(values)
 
     const query = `
       CREATE (c:Camper {name: $name})
@@ -73,7 +64,7 @@ class NewCamperForm extends React.Component {
       RETURN c.name as name, collect(s.year) as sac
     `
 
-    const createCamperRequest = new Request('/create-camper', {
+    const createCamperRequest = new Request('/campers', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -87,11 +78,16 @@ class NewCamperForm extends React.Component {
     fetch(createCamperRequest)
       .then(res => res.json())
       .then(res => {
-        console.log(res)
-        this.setState({
-          formSuccess: `Created camper: ${res.name}`,
-          createCamperResult: res,
-        })
+        this.setState(
+          {
+            formSuccess: `Created camper: ${res.name}`,
+            createCamperResult: res,
+          },
+          () => {
+            form.reset()
+            this.props.updateList()
+          }
+        )
       })
       .catch(err => console.log(err))
   }
