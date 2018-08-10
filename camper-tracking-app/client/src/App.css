@@ -3,3 +3,10 @@
   height: 100%;
   flex-direction: column;
 }
+
+.App-router {
+  flex-grow: 2;
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+}
