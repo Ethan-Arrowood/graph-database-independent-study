@@ -9,12 +9,15 @@ class ItemRenderer extends React.PureComponent {
     console.log(camper)
     return (
       <div
+        key={camper.id}
         style={this.props.style}
         className={this.props.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
       >
         {camper.name}
-        {camper.sac.map(summer => (
-          <span className="badge-summer">{summer}</span>
+        {camper.sac.sort().map(summer => (
+          <span className="badge-summer" key={`${camper.id}-${summer}`}>
+            {summer}
+          </span>
         ))}
         {/*<span className={`rank-badge ${camper.rank.toLowerCase()}`}>
           {camper.rank}
@@ -42,8 +45,8 @@ class CamperList extends React.Component {
 
   fetchCampers = searchValue => {
     if (this._fetchCampersRequest === null) {
-      let query = '/campers?sac'
-      if (searchValue) query.concat(`&search=${searchValue}`)
+      let query = '/campers?sac=True'
+      if (searchValue) query += `&search=${searchValue}`
       this._fetchCampersRequest = this.fetchCamperData(query).then(res => {
         this._fetchCampersRequest = null
         this.setState({ camperData: res.campers })

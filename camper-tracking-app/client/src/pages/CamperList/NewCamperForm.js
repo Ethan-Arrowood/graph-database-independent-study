@@ -57,7 +57,8 @@ class NewCamperForm extends React.Component {
       },
       body: JSON.stringify({
         name: values.name,
-        sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
+        // sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
+        sac: !values.sac ? [] : values.sac.split(','),
       }),
     })
 

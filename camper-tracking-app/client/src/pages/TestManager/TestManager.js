@@ -41,7 +41,11 @@ const departmentOptions = listToOptions(DEPARTMENTS)
 
 class TestManager extends React.Component {
   state = {
+    department: null,
+    rank: null,
     selectedCampers: [],
+    tests: [],
+    campers: [],
   }
 
   _camperRowRenderer = ({ columnIndex, key, rowIndex, style }) => (
@@ -61,31 +65,39 @@ class TestManager extends React.Component {
       style={style}
     >
       <div className="testColumn-rotateText">
-        <span>{this.props.tests[columnIndex].name}</span>
+        <span>{this.state.tests[columnIndex]}</span>
       </div>
     </div>
   )
 
   _checkBoxCellRenderer = ({ columnIndex, key, rowIndex, style }) => (
     <div key={key} style={style} className="checkboxCell">
-      <input type="checkbox" name={key} />
+      <input
+        type="checkbox"
+        name={`${this.state.selectedCampers[rowIndex].id}`}
+      />
     </div>
   )
 
-  _submitForm = (values, form) => {
-    console.log(values)
+  _submitForm = ({ department, rank }, form) => {
+    let query = `/tests?department=${department}&rank=${rank}`
+
+    return this.fetchData(query).then(res => {
+      console.log(res)
+      this.setState({ tests: res, department, rank })
+    })
   }
 
   _fetchCampers = searchValue => {
     let query = `/campers`
     if (searchValue) query.concat(`?search=${searchValue}`)
-    return this.fetchCamperData(query).then(res => {
+    return this.fetchData(query).then(res => {
       console.log(res)
       return { options: listToOptions(res.campers) }
     })
   }
 
-  fetchCamperData = async req => {
+  fetchData = async req => {
     try {
       const response = await fetch(req)
       return await response.json()
@@ -95,6 +107,7 @@ class TestManager extends React.Component {
     }
   }
 
+  _setCampers = campers => this.setState({ campers })
   _selectCamper = camper =>
     this.setState(({ selectedCampers }) => ({
       selectedCampers: [...selectedCampers, { name: camper.label }],
@@ -102,14 +115,32 @@ class TestManager extends React.Component {
 
   _handleSelectCamper = selectedCampers => this.setState({ selectedCampers })
 
-  render() {
-    const { tests } = this.props
+  _checkOffTests = () => {
+    // const c = this.state.campers.length
+    // const nodes = document.querySelectorAll(`input[name|='${c}']`)
+    // console.log(nodes.map(node => node.value))
 
+    const { selectedCampers, department, rank } = this.state
+
+    // const nodes = document.querySelectorAll(`input[name|='${c}']`)
+    const tests = []
+
+    selectedCampers.forEach(camper => {
+      const payload = {
+        camperID: camper.id,
+        department,
+        rank,
+        tests,
+      }
+    })
+  }
+
+  render() {
     const widthLeft = 200
     const heightTop = 180
 
     const rowCount = this.state.selectedCampers.length
-    const columnCount = tests.length
+    const columnCount = this.state.tests.length
 
     return (
       <React.Fragment>
@@ -148,10 +179,20 @@ class TestManager extends React.Component {
               </form>
             )}
           />
-          <CamperSelector
-            selectedCampers={this.state.selectedCampers}
-            onSelectCamper={this._handleSelectCamper}
-          />
+          <div className="selectorContainer">
+            <CamperSelector
+              setCampers={this._setCampers}
+              selectedCampers={this.state.selectedCampers}
+              onSelectCamper={this._handleSelectCamper}
+            />
+            <button
+              type="submit"
+              className="controls-checkOffTests"
+              onClick={this._checkOffTests}
+            >
+              Submit Test Updates
+            </button>
+          </div>
         </div>
         <div className="table">
           <AutoSizer>

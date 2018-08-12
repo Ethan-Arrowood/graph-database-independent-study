@@ -1,3 +1,8 @@
+:root {
+  --table-border-color: #666;
+  --green-button: rgb(49, 173, 45);
+}
+
 .controls {
   align-self: center;
   width: 80%;
@@ -27,16 +32,29 @@
   font-size: 1.1rem;
   border-radius: 5px;
   border: 1px solid #ddd;
-  background-color: rgb(49, 173, 45);
+  background-color: rgb(45, 79, 173);
   color: white;
 }
 
+.controls-checkOffTests {
+  padding: 5px 10px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: var(--green-button);
+  color: white;
+}
+.selectorContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.camperSelector {
+  flex-grow: 1;
+  margin-right: 10px;
+}
 .table {
   flex: 1 1 auto;
-}
-
-:root {
-  --table-border-color: #666;
 }
 
 .Table-baseContainer {

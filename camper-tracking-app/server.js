@@ -15,18 +15,24 @@ fastify.get("/", async (request, reply) => {
 fastify.post("/campers", async (request, reply) => {
   const session = request["n4jSession"];
 
-  const query = `
-  CREATE (c:Camper {name: $name})
-  WITH c
-  UNWIND $sac as summer
-  MERGE (c)-[:ATTENDED]->(s:Summer {year: summer.year})
-  RETURN c.name as name, collect(s.year) as sac
-  `;
-
   const params = {
     name: request.body.name,
     sac: request.body.sac
   };
+
+  const { name, sac } = request.body;
+
+  const query = `
+  CREATE (c:Camper {name: '${name}'})
+  WITH c
+  UNWIND [${sac}] as summer
+  MATCH (s:Summer {year: summer})
+  WITH c, s
+  MERGE (c)-[:ATTENDED]->(s)
+  RETURN c.name as name, collect(s.year) as sac
+  `;
+
+  console.log(query);
 
   try {
     let res = await session.writeTransaction(tx => tx.run(query, params));
@@ -44,23 +50,65 @@ fastify.get("/campers", async (request, reply) => {
   const session = request["n4jSession"];
 
   let query;
-  if (request.query.sac) {
-    query = "MATCH (c:Camper)-[:ATTENDED]->(s:Summer)";
-    if (request.query.search)
-      query += `WHERE c.name =~ '(?i).*${request.query.search}.*'`; //sanitize
-    query +=
-      "RETURN {name: c.name, sac: collect(s.year)} as campers\nORDER BY campers.name";
-  } else query = "MATCH (c:Camper)\nRETURN collect(c.name) as names";
+  // if (request.query.sac) {
+  //   query = "MATCH (c:Camper)-[:ATTENDED]->(s:Summer)";
+  //   if (request.query.search) query += `WHERE c.name =~ '(?i).*${request.query.search}.*'`;
+  //   query +=
+  //     "RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers\nORDER BY campers.name";
+  // } else query = "MATCH (c:Camper)\nRETURN collect(c.name) as names";
+
+  if (request.query.sac && request.query.search) {
+    query = `
+      MATCH (c:Camper)-[:ATTENDED]->(s:Summer)
+      WHERE c.name =~ '(?i).*${request.query.search.toString()}.*'
+      RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers
+      ORDER BY campers.name
+    `;
+  } else if (request.query.sac && !request.query.search) {
+    query = `
+      MATCH (c:Camper)-[:ATTENDED]->(s:Summer)
+      RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers
+      ORDER BY campers.name
+    `;
+  } else if (!request.query.sac && request.query.search) {
+    query = `
+      MATCH (c:Camper)
+      WHERE c.name =~ '(?i).*${request.query.search.toString()}.*'
+      RETURN {name: c.name, id: ID(c)} as campers
+      ORDER BY campers.name
+    `;
+  } else if (!request.query.sac && !request.query.search) {
+    query = `
+      MATCH (c:Camper)
+      RETURN {name: c.name, id: ID(c)} as campers
+      ORDER BY campers.name
+    `;
+  }
+
+  console.log(query);
 
   try {
     let res = await session.readTransaction(tx => tx.run(query));
-    const campers = request.query.sac
-      ? res.records.map(record => record.get(0))
-      : res.records[0].get("names");
-    return { campers };
+    return { campers: res.records.map(record => record.get(0)) };
   } catch (err) {
     return err;
   }
+});
+
+fastify.get("/tests", async (request, reply) => {
+  const session = request["n4jSession"];
+  const { department, rank } = request.query;
+
+  const query = `
+    MATCH (:TestCollection {name: '${department.concat(
+      rank
+    )}'})-[:TEST]->(t:Test)
+    RETURN collect(t.name) as tests
+  `;
+
+  let res = await session.readTransaction(tx => tx.run(query));
+
+  return res.records[0].get("tests");
 });
 
 fastify.post("/check-off-tests", async (request, reply) => {
