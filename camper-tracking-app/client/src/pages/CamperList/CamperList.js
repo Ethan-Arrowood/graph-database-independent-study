@@ -6,7 +6,6 @@ import NewCamperForm from './NewCamperForm'
 class ItemRenderer extends React.PureComponent {
   render() {
     let camper = this.props.data[this.props.index]
-    console.log(camper)
     return (
       <div
         key={camper.id}

@@ -23,6 +23,12 @@ const DEPARTMENTS = [
   'biking',
 ]
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
 const SelectorAdapter = ({ input, ...rest }) => (
   <Select {...input} {...rest} simpleValue />
 )
@@ -74,7 +80,7 @@ class TestManager extends React.Component {
     <div key={key} style={style} className="checkboxCell">
       <input
         type="checkbox"
-        name={`${this.state.selectedCampers[rowIndex].id}`}
+        name={`${this.state.campers[rowIndex].id}-${columnIndex}`}
       />
     </div>
   )
@@ -116,22 +122,44 @@ class TestManager extends React.Component {
   _handleSelectCamper = selectedCampers => this.setState({ selectedCampers })
 
   _checkOffTests = () => {
-    // const c = this.state.campers.length
-    // const nodes = document.querySelectorAll(`input[name|='${c}']`)
-    // console.log(nodes.map(node => node.value))
+    const { campers, department, rank } = this.state
+    const payloads = []
 
-    const { selectedCampers, department, rank } = this.state
-
-    // const nodes = document.querySelectorAll(`input[name|='${c}']`)
-    const tests = []
-
-    selectedCampers.forEach(camper => {
+    campers.forEach(camper => {
+      const tests = []
+      const nodes = document.querySelectorAll(`input[name|='${camper.id}']`)
+      nodes.forEach(({ name, checked }) => {
+        const testIndex = name.split('-')[1]
+        const testName = this.state.tests[testIndex]
+        tests.push({ name: testName, completed: checked })
+      })
       const payload = {
         camperID: camper.id,
         department,
         rank,
         tests,
       }
+      console.log(payload)
+      payloads.push(payload)
+    })
+
+    this.postTestData(payloads)
+  }
+
+  postTestData = async payloads => {
+    await asyncForEach(payloads, async payload => {
+      const req = new Request('/check-off-tests', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ ...payload }),
+      })
+
+      await fetch(req)
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     })
   }
 
