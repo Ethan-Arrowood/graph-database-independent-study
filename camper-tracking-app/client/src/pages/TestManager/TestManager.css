@@ -1,0 +1,141 @@
+:root {
+  --table-border-color: #666;
+  --green-button: rgb(49, 173, 45);
+}
+
+.controls {
+  align-self: center;
+  width: 80%;
+  background-color: #ccc;
+  border: 2px solid #666;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.controls-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+}
+
+.controls-form-field {
+  width: 200px;
+}
+
+.controls-submitButton {
+  padding: 5px 10px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: rgb(45, 79, 173);
+  color: white;
+}
+
+.controls-checkOffTests {
+  padding: 5px 10px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: var(--green-button);
+  color: white;
+}
+.selectorContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.camperSelector {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+.table {
+  flex: 1 1 auto;
+}
+
+.Table-baseContainer {
+  display: flex;
+  flex-direction: row;
+  flex-basis: flex-start;
+  height: 100%;
+  width: 100%;
+  border: 2px solid var(--table-border-color);
+}
+
+.Table-leftContainer,
+.Table-rightContainer {
+  display: flex;
+  flex-direction: column;
+  flex-basis: flex-start;
+}
+
+.Table-leftContainer {
+  border-right: 1px solid var(--table-border-color);
+}
+
+.Table-rightContainer {
+  border-left: 1px solid var(--table-border-color);
+}
+
+.Table-topLeftContainer,
+.Table-topRightContainer {
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+.Table-bottomLeftContainer,
+.Table-bottomRightContainer {
+  border-top: 1px solid var(--table-border-color);
+}
+
+.camperRow-even,
+.camperRow-odd {
+  padding: 5px 10px;
+  border-bottom: 2px solid var(--table-border-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.camperRow-even {
+  background-color: #ccc;
+}
+
+.camperRow-odd {
+  background-color: #ecc8aa;
+}
+
+.testColumn-even,
+.testColumn-odd {
+  white-space: nowrap;
+  box-sizing: border-box;
+  border-right: 2px solid var(--table-border-color);
+}
+
+.testColumn-rotateText {
+  height: 50px;
+  width: 180px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(50px) rotate(270deg);
+  transform-origin: left bottom 0;
+  overflow: hidden !important;
+  line-height: 50px;
+  padding-left: 10px;
+}
+
+.checkboxCell {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid var(--table-border-color);
+  border-bottom: 2px solid var(--table-border-color);
+  box-sizing: border-box;
+}

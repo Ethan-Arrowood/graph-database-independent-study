@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form, Field } from 'react-final-form'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
 
 const summerOptions = [
   { label: 2000, value: 2000 },
@@ -51,27 +50,15 @@ class NewCamperForm extends React.Component {
   }
 
   onSubmit = (values, form) => {
-    values = {
-      name: values.name,
-      sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
-    }
-
-    const query = `
-      CREATE (c:Camper {name: $name})
-      WITH c
-      UNWIND $sac as summer
-      MERGE (c)-[:ATTENDED]->(s:Summer {year: summer.year})
-      RETURN c.name as name, collect(s.year) as sac
-    `
-
     const createCamperRequest = new Request('/campers', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        query,
-        params: values,
+        name: values.name,
+        // sac: !values.sac ? [] : values.sac.split(',').map(s => ({ year: s })),
+        sac: !values.sac ? [] : values.sac.split(','),
       }),
     })
 
