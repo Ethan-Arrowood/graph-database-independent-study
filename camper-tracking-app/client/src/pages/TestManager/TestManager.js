@@ -81,6 +81,9 @@ class TestManager extends React.Component {
       <input
         type="checkbox"
         name={`${this.state.campers[rowIndex].id}-${columnIndex}`}
+        defaultChecked={this.state.campers[rowIndex].tests.includes(
+          this.state.tests[columnIndex]
+        )}
       />
     </div>
   )
@@ -126,18 +129,21 @@ class TestManager extends React.Component {
     const payloads = []
 
     campers.forEach(camper => {
-      const tests = []
+      const completeTests = []
+      const incompleteTests = []
       const nodes = document.querySelectorAll(`input[name|='${camper.id}']`)
       nodes.forEach(({ name, checked }) => {
         const testIndex = name.split('-')[1]
         const testName = this.state.tests[testIndex]
-        tests.push({ name: testName, completed: checked })
+        if (checked) completeTests.push(testName)
+        else incompleteTests.push(testName)
       })
       const payload = {
         camperID: camper.id,
         department,
         rank,
-        tests,
+        completeTests,
+        incompleteTests,
       }
       console.log(payload)
       payloads.push(payload)

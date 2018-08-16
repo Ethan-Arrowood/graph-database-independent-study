@@ -50,34 +50,62 @@ fastify.get("/campers", async (request, reply) => {
   const session = request["n4jSession"];
 
   let query;
-  // if (request.query.sac) {
-  //   query = "MATCH (c:Camper)-[:ATTENDED]->(s:Summer)";
-  //   if (request.query.search) query += `WHERE c.name =~ '(?i).*${request.query.search}.*'`;
-  //   query +=
-  //     "RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers\nORDER BY campers.name";
-  // } else query = "MATCH (c:Camper)\nRETURN collect(c.name) as names";
 
-  if (request.query.sac && request.query.search) {
+  if (!request.query.sac && !request.query.search && request.query.tests) {
+    query = `
+      MATCH (c:Camper)
+      OPTIONAL MATCH (c)-[:COMPLETED]->(t:Test)
+      WITH c, collect(t.name) as tests
+      RETURN {name: c.name, id: ID(c), tests: tests } as campers
+      ORDER BY campers.name
+    `;
+  } else if (
+    !request.query.sac &&
+    request.query.search &&
+    request.query.tests
+  ) {
+    query = `
+      MATCH (c:Camper)
+      WHERE c.name =~ '(?i).*${request.query.search.toString()}.*'
+      OPTIONAL MATCH (c)-[:COMPLETED]->(t:Test)
+      WITH c, collect(t) as tests
+      RETURN {name: c.name, id: ID(c), tests: tests }
+    `;
+  } else if (
+    request.query.sac &&
+    request.query.search &&
+    !request.query.tests
+  ) {
     query = `
       MATCH (c:Camper)-[:ATTENDED]->(s:Summer)
       WHERE c.name =~ '(?i).*${request.query.search.toString()}.*'
-      RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers
-      ORDER BY campers.name
+      RETURN {name: c.name, sac: collect(s.year), id: ID(c)}
     `;
-  } else if (request.query.sac && !request.query.search) {
+  } else if (
+    request.query.sac &&
+    !request.query.search &&
+    !request.query.tests
+  ) {
     query = `
       MATCH (c:Camper)-[:ATTENDED]->(s:Summer)
       RETURN {name: c.name, sac: collect(s.year), id: ID(c)} as campers
       ORDER BY campers.name
     `;
-  } else if (!request.query.sac && request.query.search) {
+  } else if (
+    !request.query.sac &&
+    request.query.search &&
+    !request.query.tests
+  ) {
     query = `
       MATCH (c:Camper)
       WHERE c.name =~ '(?i).*${request.query.search.toString()}.*'
       RETURN {name: c.name, id: ID(c)} as campers
-      ORDER BY campers.name
     `;
-  } else if (!request.query.sac && !request.query.search) {
+  } else if (
+    !request.query.sac &&
+    !request.query.search &&
+    !request.query.tests
+  ) {
     query = `
       MATCH (c:Camper)
       RETURN {name: c.name, id: ID(c)} as campers
@@ -113,20 +141,44 @@ fastify.get("/tests", async (request, reply) => {
 
 fastify.post("/check-off-tests", async (request, reply) => {
   const session = request["n4jSession"];
-  const { camperID, department, rank, tests } = request.body;
+  const {
+    camperID,
+    department,
+    rank,
+    completeTests,
+    incompleteTests
+  } = request.body;
+  const testCollection = department + rank;
 
-  const query = `
+  console.log(completeTests);
+  console.log(typeof completeTests);
+
+  const query1 = `
     MATCH (camper:Camper)
     WHERE ID(camper) = ${camperID}
-    MATCH (tests:Test)<-[:TEST]-(:TestCollection {name:${department + rank}})
-    WHERE tests.name IN ${tests}
+    MATCH (tests:Test)<-[:TEST]-(:TestCollection {name:'${testCollection}'})
+    WHERE tests.name IN ${JSON.stringify(completeTests)}
     MERGE (camper)-[c:COMPLETED]->(tests)
     RETURN camper.name as Name, size(collect(tests)) as TestsCompleted 
   `;
 
-  let res = await session.writeTransaction(tx => tx.run(query));
+  const query2 = `
+    MATCH (camper:Camper)
+    WHERE ID(camper) = ${camperID}
+    MATCH (tests:Test)<-[:TEST]-(:TestCollection {name:'${testCollection}'})
+    WHERE tests.name IN ${JSON.stringify(incompleteTests)}
+    MATCH (camper)-[c:COMPLETED]->(tests)
+    DELETE c
+    RETURN camper
+  `;
 
-  return res.records.get(0);
+  try {
+    let res1 = await session.writeTransaction(tx => tx.run(query1));
+    let res2 = await session.writeTransaction(tx => tx.run(query2));
+    return { results: [res1, res2] };
+  } catch (err) {
+    return err;
+  }
 });
 
 fastify.addHook("onRequest", (req, res, next) => {

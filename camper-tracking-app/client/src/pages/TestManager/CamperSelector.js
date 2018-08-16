@@ -13,8 +13,6 @@ const listToOptions = list =>
 export default class CamperSelector extends React.Component {
   state = {
     isLoading: false,
-    options: [],
-    selectedCampers: [],
     campers: [],
   }
 
@@ -23,7 +21,7 @@ export default class CamperSelector extends React.Component {
       this.setState(
         ({ isLoading }) => ({ isLoading: !isLoading }),
         () => {
-          let query = `/campers`
+          let query = `/campers?tests=true`
           if (searchValue) query += `?search=${searchValue}`
           this.fetchCamperData(query).then(({ campers }) => {
             this.setState(({ isLoading }) => ({
@@ -53,6 +51,11 @@ export default class CamperSelector extends React.Component {
     this._fetchCampers()
   }
 
+  _onChange = selectedCampers => {
+    this._fetchCampers()
+    this.props.onSelectCamper(selectedCampers)
+  }
+
   render() {
     const options = listToOptions(this.state.campers.map(c => c.name))
     return (
@@ -63,7 +66,7 @@ export default class CamperSelector extends React.Component {
         isLoading={this.state.isLoading}
         value={this.props.selectedCampers}
         options={options}
-        onChange={this.props.onSelectCamper}
+        onChange={this._onChange}
         multi
       />
     )
